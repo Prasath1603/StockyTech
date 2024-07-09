@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Watches</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-right: 0px;;
+
+        }
+        .container {
+            display: flex;
+            padding-right: 25px;
+            padding-top: 20px;
+            border: 10px solid whitesmoke;
+            border-radius: 20px;
+        }
+        .left-section {
+            /* flex: 1; */
+            padding: 20px;
+            width: 70%;
+
+        }
+        .right-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f2f2f2;
+
+        }
+        /* Styles for table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #ddd;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        /* Styles for form */
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 130px);
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        button.add[type="submit"] {
+            padding: 5px 10px;
+            background-color: darkblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border: black 2px;
+        }
+        button.add[type="submit"]:hover {
+            background-color: #051336;
+            transform: scale(1.04);
+        }
+        /* Styles for clickable mobile names */
+        .mobile-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        /* Styles for delete button */
+        .delete-btn {
+            background-color: red;
+            color: black;
+            padding: 5px 10px;
+            border-right: 2px;
+            cursor: pointer;
+            font-family: "Times New Roman";
+        }
+        .delete-btn:hover {
+            background-color: rgb(177, 45, 45);
+            transform: scale(1.04);
+
+        }
+        /* Styles for navigation bar */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            transition: 0.2s ease-in;
+        }
+        .navbar ul {
+            list-style-type: none;
+            margin: 5px;
+            overflow: hidden;
+            display: inline-block;
+            transition: 0.2s ease-in;
+            font-size: 18px;
+        }
+        .navbar li {
+            float: left;
+            transition: 0.2s ease-in;
+
+        }
+        .navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: 0.5s ease-in-out;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .navbar li a:hover {
+            background-color: #ddd;
+            color: black;
+            border-radius: 25px;
+
+        }
+        .upd
+        {
+            background-color: #051336;
+            color: wheat;
+            padding: 5px 10px;
+            border-right: 2px;
+            cursor: pointer;
+            font-family: "Times New Roman";
+        }
+        .upd:hover{
+
+            background-color: #40bed2;
+            color: black;
+        }
+    </style>
+</head>
+<body style="background-image: url(/images/plain-smooth-green-wall-texture.jpg)">
+<!--style="background: url(/images/mobilebg.jpg);"-->
+<nav class="navbar">
+    <ul>
+        <li><a href="/mobile/home" style="text-underline:black ">Home</a></li>
+        <li><a href="/mobile/about">About</a></li>
+        <li><a href="/mobile/contact">Contact Us</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <!-- Left section for displaying list of mobiles -->
+    <div class="left-section">
+        <h2 style="color: bisque; font-family: 'Times New Roman'">List of Watches</h2>
+        <!-- List of Mobiles -->
+        <table>
+            <!-- Table headers -->
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Model</th>
+                <th>Price(Rs.)</th>
+                <th>Remove</th>
+                <th>Update</th>
+            </tr>
+            </thead>
+            <!-- Table body -->
+            <tbody>
+            <tr th:each="watch : ${watches}">
+                <!-- Display mobile details -->
+                <td th:text="${watch.wid}">ID</td>
+                <td>
+                    <!-- Make Mobile name clickable -->
+                    <a th:href="@{/mobile/lwatch/{id}(id=${watch.wid})}" class="mobile-link" th:text="${watch.wname}">Watch Name</a>
+                </td>
+                <td th:text="${watch.wtype}">Type</td>
+                <td th:text="${watch.wmodel}">Model</td>
+                <td th:text="${watch.wprice}">Price</td>
+                <td>
+                    <form th:action="@{/mobile/lwatch/{id}(id=${watch.wid})}" method="post">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <a th:href="@{/mobile/lwatch/{id}/edit(id=${watch.wid})}" class="watch-link">
+                        <button type="button" class="upd">Update</button>
+                    </a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Right section for entering mobile details -->
+    <div class="right-section">
+        <h3>Enter Watch details to add into inventory</h3>
+        <form action="#" th:action="@{/mobile/lwatch}" th:object="${newWatch}" method="post">
+            <label for="wid">Id</label>
+            <input type="number" id="wid" name="wid" required/><br/>
+            <br>
+            <label for="wname">Name:</label>
+            <input type="text" id="wname" name="wname" required/><br/>
+            <label for="wtype">Type:</label>
+            <input type="text" id="wtype" name="wtype" required/><br/>
+            <label for="wmodel">Model:</label>
+            <input type="text" id="wmodel" name="wmodel" required/><br/>
+
+            <label for="wprice">Price:</label>
+            <input type="text" id="wprice" name="wprice" required/><br/>
+
+            <button type="submit" class="add">Add Watch</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

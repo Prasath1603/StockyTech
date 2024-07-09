@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Watch</title>
+    <style>
+        /* Styles for form */
+        form {
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 300px;
+            /* width: calc(100% - 130px); */
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        button.update[type="submit"] {
+            padding: 5px 10px;
+            background-color: darkblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button.update[type="submit"]:hover {
+            background-color: #051336;
+            transform: scale(1.04);
+        }
+    </style>
+</head>
+<body>
+<h2>Update Watch</h2>
+<form action="#" th:action="@{/mobile/lwatch/{id}/update(id=${watch.wid})}" th:object="${updatedWatch}" method="post">
+    <label for="wid">ID:</label>
+    <input type="text" id="wid" name="wid" th:value="${watch.wid}" readonly/><br/>
+    <label for="wname">Name:</label>
+    <input type="text" id="wname" name="wname" th:value="${watch.wname}" required/><br/>
+    <label for="wtype">Type:</label>
+    <input type="text" id="wtype" name="wtype" th:value="${watch.wtype}" required/><br/>
+    <label for="wmodel">Model:</label>
+    <input type="text" id="wmodel" name="wmodel" th:value="${watch.wmodel}" required/><br/>
+    <label for="wprice">Price:</label>
+    <input type="text" id="wprice" name="wprice" th:value="${watch.wprice}" required/><br/>
+    <button type="submit" class="update">Update Watch</button>
+</form>
+</body>
+</html>

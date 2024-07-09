@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Watch Details</title>
+    <style>
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 20px;
+            padding-top: 100px;
+        }
+        .container {
+            padding-top: ;
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid black;
+        }
+        h2 {
+            color: #060606;
+        }
+        /* Styles for book details */
+        .book-details {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .watch-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .watch-details th, .watch-details td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        .watch-details th {
+            text-align: left;
+            color:black;
+        }
+        .watch-details td {
+            vertical-align: top;
+        }
+        .back{
+            background-color:black ;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 260px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body style="background-image:url(/images/pexels-aleksandar-pasaric-1323712.jpg)">
+<div class="container">
+    <h2><center>Watch Details</center></h2>
+    <div class="watch-details">
+        <table>
+            <tr>
+                <th>ID</th>
+                <td th:text="${watch.wid}">-</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td th:text="${watch.wname}">-</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td th:text="${watch.wtype}">-</td>
+            </tr>
+            <tr>
+                <th>Model</th>
+                <td th:text="${watch.wmodel}">-</td>
+            <tr>
+                <th>Price(Rs.)</th>
+                <td th:text="${watch.wprice}">-</td>
+            </tr>
+        </table>
+    </div>
+    <p><a href="/mobile/lwatch" class="back">Back</a></p>
+</div>
+</body>
+</html>
